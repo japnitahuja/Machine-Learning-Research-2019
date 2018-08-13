@@ -1,6 +1,7 @@
 import csv
 from sklearn import preprocessing
 import numpy   
+import scipy
 ohe = preprocessing.OneHotEncoder()
 le = preprocessing.LabelEncoder()
 
@@ -18,6 +19,7 @@ label = numpy.array(label)
 
 #number of attributes
 m = len(line[1])
+#m_temp = m
 #number of instances
 n = len(line)
 
@@ -39,10 +41,11 @@ def process(x):
 	#copy the class value
 	for i in range(0,n):
 		#print(x[i][m-1])
+		global m
 		a += x[i][m-1]
 		x[i][m-1] = 0
 	#print(type(x[1][1]))
-	print(x)
+	#print(x)
 	#print(a)
 
 	'''
@@ -59,17 +62,54 @@ def process(x):
 	preprocessing.OneHotEncoder(categorical_features=b)
 	x = ohe.transform(x).toarray()
 	'''
-	y = x
-	for j in range(0,m):
-		y = ohe.transform(x).toarray()
-		if label[:,i] == '0':
-			cnt_j = 0
-			for k in range(cnt_j,j):
-				b[i][k] = x[i][k]
-			b = ohe.fit_transform(b).toarray()
+	
+	y = [0 for i in range(0,n)] 
+	for j in range(0,m-1):
+		if label[:,j] == '1':
+			for i in range(0,n):
+				y[i] = x[i][j] 
+			y = numpy.array(y)
+			#reshape the array to a 2D matrix
+			y = numpy.reshape(y,(-1,1))
+			#print(y)
+			ohe.fit(y)
+			y1 = ohe.transform(y)#.toarray()
+			#print(y1)
+			#number of attributes gotten from ohe(y)
 			
+			b = scipy.sparse.csr_matrix.getnnz(y1,axis = 0)
+			#print(b)
+			len_y = len(b)
+			#print(len_y)
+			'''
+			y = toarray()
+			print(y)
+			
+			len_y = numpy.ndarray.shape(y)
+			print(len_y)
+			len_y = len_y[1]
+			print(len_y)
+			'''
+			y = ohe.transform(y).toarray()
+			m_temp = m
+			m_temp += len_y
+			#print(m)
+			x_temp = numpy.zeros((n,m_temp-1), dtype=numpy.float)
+			for k in range(0,j):
+				for i in range(0,n):
+					x_temp[i][k] = x[i][k]
+			for k in range(0,len_y):
+				for i in range(0,n):
+					x_temp[i][k+j] = y[i][k]
+			for k in range(j+1,m):
+				for i in range(0,n):
+					x_temp[i][k+len_y-1] = x[i][k]
+			#print(x_temp)
+			x = x_temp 
+			m = m_temp
 
-	print(x)
+
+	#print(x)
 
 	#scale the dataset
 	scaler = preprocessing.MinMaxScaler()
@@ -80,7 +120,7 @@ def process(x):
 	m_x = len(x[0])
 	for i in range(0,n):
 		x[i][m_x-1] = a[i]
-	print(x)
+	#print(x)
 		
 	if flag == 0:
 		with open("dataset1.txt","w") as f:
