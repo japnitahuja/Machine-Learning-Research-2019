@@ -74,8 +74,8 @@ def process(x):
 	x_temp = numpy.empty((n,0))
 	
 	for j in range(0,m-1):
+		y = [0 for i in range(0,n)]
 		if label[:,j] == '1':
-			y = [0 for i in range(0,n)] 
 			for i in range(0,n):
 				#print("x ij")
 				#print(x[i][j])
@@ -161,7 +161,7 @@ def process(x):
 	#print(x.shape)
 	x_class = x[:,m-1-cnt]
 	x = numpy.delete(x,m-1-cnt,axis=1)
-	x = numpy.column_stack((x_temp,y))
+	x = numpy.column_stack((x,x_temp))
 	m = len(x[0])
 	#print(x_class.shape)
 	#print(x.shape)
