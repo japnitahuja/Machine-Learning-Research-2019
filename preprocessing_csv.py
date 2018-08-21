@@ -186,17 +186,21 @@ def process(x):
 			writer = csv.writer(f)
 			writer.writerows(x)
 
+	global flag_writer2
 	if flag_writer2 == 1:
 		print("2")
 		with open("dataset2.txt","w") as f:
 			writer2 = csv.writer(f)
 			writer2.writerows(x)
+		flag_writer2 = 0
 
+	global flag_writer3
 	if flag_writer3 == 1:
 		print("3")
 		with open('dataset3.txt','w') as f:
 			writer3 = csv.writer(f)
 			writer3.writerows(x)
+		flag_writer3 = 0
 
 x = numpy.array(line)
 
@@ -219,12 +223,27 @@ y = ''
 if flag == 1:
 	for i1 in range(0,m):
 		#print(i1)
+		
 		if label[:,i1] == '1':			
 			a = le.fit_transform(x[:,i1])
 		#	print(a)
 			for j1 in range(0,n):
 				x[j1][i1] = a[j1]
+		
 	#print(x)
+	#print(n)
+	#print(m)
+	#print("XXXXXXXX")
+	#print(x)
+	for i in range(0,n):
+		#print(i)
+		for j in range(0,m):
+			#print(x[i][j])
+			if x[i][j] == '?':
+			#	print('before', x[i][j])
+				x[i][j] = numpy.nan
+			#	print('after', x[i][j])				
+
 
 	y = mean_imputer.fit_transform(x)
 
@@ -245,13 +264,25 @@ m = m_fix
 mode_imputer = preprocessing.Imputer(strategy='most_frequent')
 if flag == 1:
 	#print('2')
+	#print(m)
+	#print(n)
+	temp = line[0][0]
+	line[0][0] = 100
 	x = numpy.array(line)
-	m = len(line[0])
+	x[0][0] = temp
+	line[0][0] = temp
+	#print(x)
+	'''
+	x[0][0]="jjj"
+	print(x)
+	'''
 	for i in range(0,n):
 		#print(i)
 		for j in range(0,m):
 			if x[i][j] == '?':
+				#print('before',x[i][j])
 				x[i][j] = numpy.nan
+				#print('after',x[i][j])
 
 
 	for i1 in range(0,m):
