@@ -63,18 +63,9 @@ for folder in os.listdir(artificial_dataset_folder):
 
             os.rename(jpg_img_path, new_jpg_path)
 
-            #shutil.copy(jpg_img_path,os.path.join(main_folder) )
+            os.rename(os.path.join(folder_path,dataset), os.path.join(main_folder,new_dataset))
 
-            file = open(os.path.join(folder_path,dataset),"r")
-            file_op = os.path.join(main_folder,new_dataset)
-            file_op = open(file_op,"w")
-            
-            for i in file:
-                file_op.write(i)
-            
-            file.close()
-            file_op.close()
-            
+            #shutil.copy(jpg_img_path,os.path.join(main_folder) )
         count += 200
     print(count)
        
