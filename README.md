@@ -5,6 +5,7 @@ Setting up computers:
 step 1: download pip
 
 sudo apt update
+
 sudo apt install python3-pip
 
 step 2: install R
