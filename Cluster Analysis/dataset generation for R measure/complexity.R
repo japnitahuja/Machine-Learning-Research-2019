@@ -3,7 +3,7 @@ library(ECoL)
 
 home = getwd()
 
-dataset_folder = file.path(home ,"main_folder")
+dataset_folder = file.path(home ,"cluster_datasets")
 count <- 0
 for (dataset in list.files(dataset_folder))
 {
