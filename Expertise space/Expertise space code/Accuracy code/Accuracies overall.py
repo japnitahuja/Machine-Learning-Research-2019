@@ -31,11 +31,6 @@ op_file5_path = os.path.join(path_metadata_folder,"accuracy_" + algo5 + ".txt")
 op_file6_path = os.path.join(path_metadata_folder,"accuracy_" + algo6 + ".txt")
 
 
-#clear file
-op_file = open(op_file_path,"w")
-op_file.close()
-
-
 if os.path.exists(path_dataset_folder):
 
     for dataset in os.listdir(path_dataset_folder):
@@ -138,7 +133,12 @@ if os.path.exists(path_dataset_folder):
 
             #classifier model generation
             #classifier_dt.fit(train_set_x,train_set_y)
-            classifier.fit(train_set_x,train_set_y)
+            classifier1.fit(train_set_x,train_set_y)
+            classifier2.fit(train_set_x,train_set_y)
+            classifier3.fit(train_set_x,train_set_y)
+            classifier4.fit(train_set_x,train_set_y)
+            classifier5.fit(train_set_x,train_set_y)
+            classifier6.fit(train_set_x,train_set_y)
 
             #accuracies
             #accuracy_dt[n0] = classifier_dt.score(test_set_x,test_set_y)
