@@ -48,7 +48,8 @@ error_file.close()
 error_file = open(os.path.join(path_metadata_folder,"error_" + algo6 + ".txt"),"w")
 error_file.close()
 
-
+count_file = open("count_file.txt","w")
+count_file.close()
 count = 0
 if os.path.exists(path_dataset_folder):
 
@@ -58,8 +59,11 @@ if os.path.exists(path_dataset_folder):
         if dataset.startswith('.'):
             continue
         
-        print("COUNT: " + str(count))
+        count_file = open("count_file.txt","a")
+        count_file.append(str(count) + "\n")
+        count_file.close()
         count += 1
+        
         print(dataset)
         
         #open dataset
