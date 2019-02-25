@@ -49,7 +49,7 @@ error_file = open(os.path.join(path_metadata_folder,"error_" + algo6 + ".txt"),"
 error_file.close()
 
 
-
+count = 0
 if os.path.exists(path_dataset_folder):
 
     for dataset in os.listdir(path_dataset_folder):
@@ -57,7 +57,11 @@ if os.path.exists(path_dataset_folder):
         #check for hidden files
         if dataset.startswith('.'):
             continue
+        
+        print("COUNT: " + str(count))
+        count += 1
         print(dataset)
+        
         #open dataset
         file = open(os.path.join(path_dataset_folder,dataset), "r")
         
