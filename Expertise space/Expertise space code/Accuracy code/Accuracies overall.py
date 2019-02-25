@@ -30,6 +30,25 @@ op_file4_path = os.path.join(path_metadata_folder,"accuracy_" + algo4 + ".txt")
 op_file5_path = os.path.join(path_metadata_folder,"accuracy_" + algo5 + ".txt")
 op_file6_path = os.path.join(path_metadata_folder,"accuracy_" + algo6 + ".txt")
 
+files = [op_file1_path,op_file2_path,op_file3_path,op_file4_path,op_file5_path,op_file6_path]
+for i in files:
+    file_temp = open(i,"w")
+    file_temp.close()
+
+error_file = open(os.path.join(path_metadata_folder,"error_" + algo1 + ".txt"),"w")
+error_file.close()
+error_file = open(os.path.join(path_metadata_folder,"error_" + algo2 + ".txt"),"w")
+error_file.close()
+error_file = open(os.path.join(path_metadata_folder,"error_" + algo3 + ".txt"),"w")
+error_file.close()
+error_file = open(os.path.join(path_metadata_folder,"error_" + algo4 + ".txt"),"w")
+error_file.close()
+error_file = open(os.path.join(path_metadata_folder,"error_" + algo5 + ".txt"),"w")
+error_file.close()
+error_file = open(os.path.join(path_metadata_folder,"error_" + algo6 + ".txt"),"w")
+error_file.close()
+
+
 
 if os.path.exists(path_dataset_folder):
 
@@ -136,43 +155,49 @@ if os.path.exists(path_dataset_folder):
                 classifier1.fit(train_set_x,train_set_y)
                 accuracy1[n0] = classifier1.score(test_set_x,test_set_y)
             except:
-                file_error = ("dt_error.txt","a")
+                file_error = (os.path.join(path_metadata_folder,"error_" + algo1 + ".txt"),"a")
                 file_error.append(str(dataset) + "\n")
+                file_error.close()
             
             try:
                 classifier2.fit(train_set_x,train_set_y)
                 accuracy2[n0] = classifier2.score(test_set_x,test_set_y)
             except:
-                file_error = ("knn_error.txt","a")
+                file_error = (os.path.join(path_metadata_folder,"error_" + algo2 + ".txt"),"a")
                 file_error.append(str(dataset) + "\n")
+                file_error.close()
             
             try:
                 classifier3.fit(train_set_x,train_set_y)
                 accuracy3[n0] = classifier3.score(test_set_x,test_set_y)
             except:
-                file_error = ("nb_error.txt","a")
+                file_error = (os.path.join(path_metadata_folder,"error_" + algo3 + ".txt"),"a")
                 file_error.append(str(dataset) + "\n")
+                file_error.close()
             
             try:
                 classifier4.fit(train_set_x,train_set_y)
                 accuracy4[n0] = classifier4.score(test_set_x,test_set_y)
             except:
-                file_error = ("rf_error.txt","a")
+                file_error = (os.path.join(path_metadata_folder,"error_" + algo4 + ".txt"),"a")
                 file_error.append(str(dataset) + "\n")
+                file_error.close()
             
             try:
                 classifier5.fit(train_set_x,train_set_y)
                 accuracy5[n0] = classifier5.score(test_set_x,test_set_y)
             except:
-                file_error = ("lda_error.txt","a")
+                file_error = (os.path.join(path_metadata_folder,"error_" + algo5 + ".txt"),"a")
                 file_error.append(str(dataset) + "\n")
+                file_error.close()
                 
             try:
                 classifier6.fit(train_set_x,train_set_y)
                 accuracy6[n0] = classifier6.score(test_set_x,test_set_y)
             except:
-                file_error = ("qda_error.txt","a")
+                file_error = (os.path.join(path_metadata_folder,"error_" + algo6 + ".txt"),"a")
                 file_error.append(str(dataset) + "\n")
+                file_error.close()
            
         files = [op_file1_path,op_file2_path,op_file3_path,op_file4_path,op_file5_path,op_file6_path]
         accuracies = [accuracy1, accuracy2, accuracy3, accuracy4, accuracy5, accuracy6]
