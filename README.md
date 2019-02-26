@@ -1,4 +1,4 @@
-# Meta-Learning
+Meta-Learning
 Research Project
 Setting up computers:
 
@@ -21,3 +21,7 @@ cd ~/Downloads
 wget https://download1.rstudio.org/rstudio-xenial-1.1.419-amd64.deb
 
 sudo gdebi rstudio-xenial-1.1.419-amd64.deb
+
+make thumbdrive readable
+sudo apt install exfat-fuse exfat-utils
+
