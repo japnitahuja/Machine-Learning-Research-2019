@@ -8,7 +8,7 @@ Debug = 0
 
 complexity_features = open("complexity_uci.txt").read().split("\n")
 normal_features = open("normal_metafeatures_uci.txt").read().split("\n")
-labels = open("dt_vs_qda.txt").read().split("\n")
+labels = open("dt_vs_rf.txt").read().split("\n")
 
 file = open("cluster_wise_data.txt","w")
 file.close()
@@ -870,6 +870,16 @@ for n0 in range(10):
                 row.append(cluster)
                 row.append(correct_cluster[cluster] / total[cluster])
                 writer.writerow(row)
+
+        with open("best_cluster_metafeature_cluster.txt", "a") as f:
+            writer = csv.writer(f)
+            writer.writerow(best_cluster_metafeature)
+
+        with open("best_cluster_metafeature_baseline.txt", "a") as f:
+            writer = csv.writer(f)
+            temp_best_baseline = []
+            temp.append(best_baseline_metafeature)
+            writer.writerow(temp_best_baseline)
 
 
         accuracy_cluster.append(sum(correct_cluster)/sum(total))
