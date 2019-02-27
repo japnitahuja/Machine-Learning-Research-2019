@@ -878,7 +878,7 @@ for n0 in range(10):
         with open("best_cluster_metafeature_baseline.txt", "a") as f:
             writer = csv.writer(f)
             temp_best_baseline = []
-            temp.append(best_baseline_metafeature)
+            temp_best_baseline.append(best_baseline_metafeature)
             writer.writerow(temp_best_baseline)
 
 
