@@ -36,6 +36,8 @@ file = open("complexity.txt").read().split("\n")
 count = 0
 
 for i in file:
+    if i =="":
+        continue
     if i =='"x"':
         continue
     if count == 23:
