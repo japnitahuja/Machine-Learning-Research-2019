@@ -97,13 +97,13 @@ for measure_i in measures.keys():
             break
         '''
         if count == 400:
-            with open("complexity_list.txt", "a") as f:
+            with open("complexity_list.csv", "a") as f:
                 writer = csv.writer(f)
                 temp_list = [[] for i in range(4)]
                 temp_list[0].append(measure_i)
                 writer.writerows(temp_list)
 
-            with open("complexity_format.txt", "a") as f:
+            with open("complexity_format.csv", "a") as f:
                 writer = csv.writer(f)
                 writer.writerows(acc_wise)
                 break
