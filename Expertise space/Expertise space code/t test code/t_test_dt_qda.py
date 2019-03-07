@@ -32,7 +32,17 @@ for i in range(n):
 		algo2_temp.append(float(algo2[i][j]))
 	#print(algo1_temp)
 	#print(algo2_temp)
-	t_test = stats.ttest_rel(algo1_temp,algo2_temp)
+	temp1 = [0 for i in range(10)]
+	temp2 = [0 for i in range(10)]
+	for j in range(10):
+		for k in range(10):
+			temp1[j] += algo1_temp[10*j+k]
+			temp2[j] += algo2_temp[10*j+k]
+		temp1[j] /= 10
+		temp2[j] /= 10
+	#print(temp1)
+	#print(temp2)
+	t_test = stats.ttest_rel(temp1,temp2)
 	#print(t_test)
 
 	t_test_value = t_test[0]
