@@ -821,7 +821,7 @@ with open("result_cluster_wise.txt", "w") as f:
 
 with open("centroid_wise_acc.txt", "w"):
 	writer = csv.writer(f)
-	writer.writerows(centorid_wise_acc)
+	writer.writerows(centroid_wise_acc)
 
 with open("centroid_pair.txt", "w"):
 	writer = csv.writer(f)
