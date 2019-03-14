@@ -6,8 +6,8 @@ from scipy import stats
 from sklearn import preprocessing
 Debug = 0
 
-complexity_features = open("complexity_measures.txt").read().split("\n")
-normal_features = open("Classical-Decision_Tree.txt").read().split("\n")
+complexity_features = open("complexity_uci.txt").read().split("\n")
+normal_features = open("normal_metafeatures_uci.txt").read().split("\n")
 labels = open("dt_vs_knn.txt").read().split("\n")
 
 file = open("cluster_wise_data.txt","w")
@@ -87,10 +87,6 @@ for i in complexity_features:
         i = i.split(",")
         index = int(i[0])
         i = i[1:]
-
-        if index >= 1155 and index <= 20629:
-            continue
-
 
         for j in range(22):
             if i[j] != "inf":   
@@ -864,6 +860,26 @@ for n0 in range(10):
                 temp.append(0)
             else:
                 temp.append(correct_cluster[cluster] / total[cluster])
+
+            with open("n0_correct_baseline.txt","a") as f:
+                writer = csv.writer(f)
+                row = []
+                if total[cluster] == 0:
+                    row.append(0)
+                else:
+                    row.append(correct_baseline[cluster])
+                row.append(total[cluster])
+                writer.writerow(row)
+
+            with open("n0_correct_cluster.txt","a") as f:
+                writer = csv.writer(f)
+                row = []
+                if total[cluster] == 0:
+                    row.append(0)
+                else:
+                    row.append(correct_cluster[cluster])
+                row.append(total[cluster])
+                writer.writerow(row)
 
             cluster_wise_acc_file = "cluster_wise_accuracy.txt"
             with open(cluster_wise_acc_file,"a") as f:
