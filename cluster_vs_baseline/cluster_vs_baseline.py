@@ -8,7 +8,7 @@ Debug = 0
 
 complexity_features = open("complexity_uci.txt").read().split("\n")
 normal_features = open("normal_metafeatures_uci.txt").read().split("\n")
-labels = open("dt_vs_knn.txt").read().split("\n")
+labels = open("dt_vs_lda.txt").read().split("\n")
 
 file = open("cluster_wise_data.txt","w")
 file.close()
@@ -115,10 +115,6 @@ for i in normal_features:
         index = int(i[0])
         i = i[1:]
 
-
-        if index >= 1155 and index <= 20629:
-            continue
-
         for j in range(19):
             x2[index][j] = float(i[j])
             
@@ -138,8 +134,6 @@ for i in labels:
         i = i.split(",")
         index = int(i[0])
 
-        if index >= 400 and index < 600:
-            continue
         i = int(i[1])
         y[index] = int(i)
 
