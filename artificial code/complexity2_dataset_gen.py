@@ -278,20 +278,22 @@ for row_n in range(n0):
 
     #print(best_cluster_metafeature_baseline)
 
-    for i in cluster_train[row_n][cluster]:
-        i = int(i)
-        if i >= 600:
-            i -= 200
-        temp = []
-        for j in range(len(best_metafeature[best_metafeature_label])):
-            temp.append(best_metafeature[best_metafeature_label][i][cluster])
-        temp.append(Y_temp[i])
+    for cluster in range(4):
+        for i in cluster_train[row_n][cluster]:
+            i = int(i)
+            if i >= 600:
+                i -= 200
+            temp = []
+            for j in range(len(best_metafeature[best_metafeature_label])):
+                temp.append(best_metafeature[best_metafeature_label][i][cluster])
+            temp.append(Y_temp[i])
 
-        os.chdir(baseline_path)
-        new_file = str(row_n) + ".txt"
-        with open(new_file, "a") as f:
-            writer =csv.writer(f)
-            writer.writerow(temp)
+            os.chdir(baseline_path)
+            new_file = str(row_n) + ".txt"
+            with open(new_file, "a") as f:
+                writer =csv.writer(f)
+                writer.writerow(temp)
+
 
 #print("count inf", cnt_inf)
             
