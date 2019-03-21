@@ -8,7 +8,10 @@ from sklearn.metrics import mean_squared_error
 #from relative_criteria import Dunn_index, Davies_Bouldin, silhouette_index
 import numpy
 
-os.mkdir(os.path.join(os.getcwd(),"baseline_datasets"))
+file_path = os.path.join(os.getcwd(),"baseline_datasets")
+if not os.path.isdir(file_path):
+    os.mkdir(file_path)
+
 file = open("cluster_analysis.txt","w")
 file.close()
 
@@ -20,7 +23,7 @@ def sse(true, pred):
 
 complexity_features = open("complexity_measures.txt").read().split("\n")
 normal_features = open("Classical-Decision_Tree.txt").read().split("\n")
-labels = open("dt_vs_knn.txt").read().split("\n")
+labels = open("dt_vs_lda.txt").read().split("\n")
 
 file = open("cluster_wise_data.txt","w")
 file.close()
@@ -48,7 +51,7 @@ for i in complexity_features:
         index = int(i[0])
         i = i[1:]
 
-        if index >= 1155 and index <= 20629:
+        if index >= 400 and index <= 600:
             continue
 
         for j in range(22):
@@ -82,7 +85,7 @@ for i in normal_features:
         i = i[1:]
 
 
-        if index >= 1155 and index <= 20629:
+        if index >= 400 and index <= 600:
             continue
 
         for j in range(19):
@@ -104,7 +107,7 @@ for i in labels:
         i = i.split(",")
         index = int(i[0])
 
-        if index >= 1155 and index <= 20629:
+        if index >= 400 and index <= 600:
             continue
         i = int(i[1])
         y[index] = int(i)
@@ -247,6 +250,8 @@ for row_n in range(n0):
 
         for i in cluster_train[row_n][cluster]:
             i = int(i)
+            if i >= 600:
+                i -= 200
             temp = []
             temp.append(X2_temp[i][4])
             temp.append(X2_temp[i][7])

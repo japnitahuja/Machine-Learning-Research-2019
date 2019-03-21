@@ -8,7 +8,10 @@ from sklearn.metrics import mean_squared_error
 #from relative_criteria import Dunn_index, Davies_Bouldin, silhouette_index
 import numpy
 
-os.mkdir(os.path.join(os.getcwd(),"cluster_datasets"))
+file_path = os.path.join(os.getcwd(),"cluster_datasets")
+if not os.path.isdir(file_path):
+    os.mkdir(file_path)
+
 file = open("cluster_analysis.txt","w")
 file.close()
 
