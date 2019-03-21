@@ -277,6 +277,7 @@ for row_n in range(n0):
     best_metafeature_label = best_cluster_metafeature_baseline[row_n][0]
 
     #print(best_cluster_metafeature_baseline)
+
     for cluster in range(4):
         for i in cluster_train[row_n][cluster]:
             i = int(i)
@@ -292,6 +293,7 @@ for row_n in range(n0):
             with open(new_file, "a") as f:
                 writer =csv.writer(f)
                 writer.writerow(temp)
+
 
 #print("count inf", cnt_inf)
             
