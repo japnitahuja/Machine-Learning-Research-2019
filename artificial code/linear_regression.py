@@ -2,6 +2,7 @@ import numpy as np
 import csv
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error
+from scipy.stats import pearsonr
 
 debug = True
 
@@ -26,11 +27,21 @@ with open("complexity_baseline_format_normal.txt", "r") as f:
 	reader = csv.reader(f)
 	baseline_complexity = [row for row in reader]
 	baseline_complexity = np.array(baseline_complexity).astype(np.float64)
-
+'''
 with open("baseline_accuracy.txt", "r") as f:
 	reader = csv.reader(f)
 	baseline_accuracy = [row for row in reader]
 	baseline_accuracy = np.array(baseline_accuracy).astype(np.float64)
+'''
+with open("hybrid_overall_acc.txt", "r") as f:
+	reader = csv.reader(f)
+	hybrid_overall_acc = [row for row in reader]
+
+baseline_accuracy = hybrid_overall_acc[2][:]
+baseline_accuracy = np.array(baseline_accuracy).astype(np.float64)
+print(baseline_accuracy)
+
+
 
 '''
 #calculate mean baseline complexity
@@ -58,7 +69,7 @@ for feature in range(22):
 #calculate difference between baseline accuracy and cluster wise accuracy
 for n0 in range(100):
 	for cluster in range(4):
-		cluster_wise_accuracy[n0*4+cluster][3] -= baseline_accuracy[0][n0]
+		cluster_wise_accuracy[n0*4+cluster][3] -= baseline_accuracy[n0]
 
 #form the dataset for linear regression model
 line = []
@@ -119,16 +130,19 @@ while flag:
 		data_class = np.array(data_class)
 		data_class = data_class.astype(np.float64)
 		reg.fit(data_m,data_class)
-		score.append(reg.score(data_m,data_class))
+		r_temp = pearsonr(data_class,reg.predict(data_m))
+		score.append(r_temp[0]**2)
 		coef_temp.append(reg.coef_)
 		y_pred_temp.append(reg.predict(data_m))
 		y_true_temp.append(data_class)
 		y_pred.append(y_pred_temp)
 		y_true.append(y_true_temp)
 		feat_all.append(feat_temp)
+	'''
 	if debug:
 		print("score")
 		print(score)
+		'''
 	for i in range(len(score)):
 		if score_max == None:
 			score_max = i
@@ -184,4 +198,6 @@ with open("coefficient.txt","w") as f:
 	writer = csv.writer(f)
 	writer.writerow(feat_old_coef)
 	writer.writerow(feat_old)
-	#writer.write(score[score_max])
+	temp = []
+	temp.append(score[score_max])
+	writer.writerow(temp)
