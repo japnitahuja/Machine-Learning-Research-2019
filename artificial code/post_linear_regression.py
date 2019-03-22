@@ -31,8 +31,12 @@ for feature in range(22):
 		for cluster in range(4):
 			cluster_wise_complexity[n0*4+cluster][feature] -= baseline_complexity[n0][feature]
 
+#print(cluster_wise_complexity)
+
 coefficient = line[0]
 selected_features = line[1]
+
+#print(coefficient)
 
 cluster_select = []
 final_acc = []
@@ -43,12 +47,14 @@ for n0 in range(100):
 	temp_select = []
 	for cluster in range(4):
 		x = []
+		temp = []
 		for feature in selected_features:
 			feature = int(feature)
-			x.append(cluster_wise_complexity[n0*4+cluster][feature])
+			temp.append(cluster_wise_complexity[n0*4+cluster][feature])
 		result = 0
 		for i in range(len(coefficient)):
-			result += float(coefficient[i])*x[n0*4+cluster][i]
+			result += float(coefficient[i])*temp[i]
+		#print(temp, result)
 		if result > 0:
 			no_corr += int(n0_correct_cluster[n0*4+cluster][0])
 			temp_select.append("c")
@@ -62,8 +68,10 @@ for n0 in range(100):
 
 with open("final_result.txt", "w") as f:
 	writer = csv.writer(f)
+	temp = []
+	temp.append(sum(final_acc)/len(final_acc))
+	writer.writerow(temp)
 	writer.writerow(final_acc)
-	writer.writerow("\n")
 	writer.writerows(cluster_select)
 
 
