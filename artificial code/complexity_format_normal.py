@@ -26,27 +26,8 @@ measures = {"overlapping.F1":[0 for i in range(1000)],
             "network.Hubs":[0 for i in range(1000)]}
 
 cluster_wise_acc = [[None for i in range(4)] for i in range(100)]
-#read cluster_wise_accuracy
-with open("cluster_wise_accuracy.txt", "r") as f:
-    reader = csv.reader(f)
-    for row in reader:
-        cluster_wise_acc[int(row[0])*10+int(row[1])][int(row[2])] = float(row[3])
 
-centroids = []
-with open("centroids.txt", "r") as f:
-	reader = csv.reader(f)
-	cnt = 0
-	row_ins = []
-	for row in reader:
-		if cnt % 5 != 0:
-			row_ins.append(row)
-		if cnt % 5 == 0 and cnt != 0:
-			centroids.append(row_ins)
-			row_ins = []
-		cnt += 1
-	centroids.append(row_ins)
-
-file = open("complexity_cluster.txt").read().split("\n")
+file = open("complexity2_cluster.txt").read().split("\n")
 count = 0
 
 for i in file:
