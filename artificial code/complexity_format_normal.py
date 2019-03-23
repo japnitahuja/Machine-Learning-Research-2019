@@ -27,7 +27,7 @@ measures = {"overlapping.F1":[0 for i in range(1000)],
 
 cluster_wise_acc = [[None for i in range(4)] for i in range(100)]
 
-file = open("complexity2_cluster.txt").read().split("\n")
+file = open("complexity_cluster.txt").read().split("\n")
 count = 0
 
 for i in file:
