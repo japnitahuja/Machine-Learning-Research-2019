@@ -1,7 +1,7 @@
 from scipy import stats
 import csv
 import numpy as np 
-flag  = 1 #flag = 0 -> 400 vs 400; flag = 1 -> 10 vs 10
+flag = input("Input 0(400 vs 400) or 1(10 vs 10):") #flag = 0 -> 400 vs 400; flag = 1 -> 10 vs 10
 
 with open("hybrid_overall_acc.txt", "r") as f:
 	reader = csv.reader(f)
