@@ -1,4 +1,5 @@
 from scipy.stats import entropy 
+from scipy.stats import pearsonr 
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
@@ -78,6 +79,7 @@ for n0 in range(100):
 
 plt.scatter(entropy_diff, acc_diff)
 plt_name = "class_entropy" + ".png"
+plt.title("r^2="+str(pearsonr(entropy_diff,acc_diff)[0]**2))
 plt.savefig(plt_name, dpi=300)
 
 
