@@ -31,7 +31,7 @@ measures = {"overlapping.F1":[0 for i in range(1000)],
             "network.ClsCoef":[0 for i in range(1000)],
             "network.Hubs":[0 for i in range(1000)]}
 
-file = open("complexity_baseline.txt").read().split("\n")
+file = open("complexity2_baseline.txt").read().split("\n")
 count = 0
 
 vis_baseline = [0 for i in range(400)]
@@ -88,7 +88,7 @@ measures = {"overlapping.F1":[0 for i in range(1000)],
             "network.ClsCoef":[0 for i in range(1000)],
             "network.Hubs":[0 for i in range(1000)]}
 
-file = open("complexity_cluster.txt").read().split("\n")
+file = open("complexity2_cluster.txt").read().split("\n")
 count = 0
 
 vis_cluster = [0 for i in range(400)]
