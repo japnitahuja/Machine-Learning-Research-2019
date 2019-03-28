@@ -13,6 +13,7 @@ def sse(true, pred):
 	a = mse(true, pred, multioutput = 'raw_values')
 	return sum(a)
 
+
 #format the baseline complexity based meta features
 measures = {"overlapping.F1":[0 for i in range(1000)],
             "overlapping.F1v":[0 for i in range(1000)],
@@ -131,7 +132,6 @@ cluster_wise_complexity = np.array(cluster_wise_complexity).astype(np.float64)
 baseline_complexity = np.array(baseline_complexity).astype(np.float64)
 
 
-
 with open("cluster_wise_accuracy.txt", "r") as f:
 	reader = csv.reader(f)
 	cluster_wise_accuracy = [row for row in reader]
@@ -147,9 +147,10 @@ with open("hybrid_overall_acc.txt", "r") as f:
 	reader = csv.reader(f)
 	hybrid_overall_acc = [row for row in reader]
 
+
 baseline_accuracy = hybrid_overall_acc[2][:]
 baseline_accuracy = np.array(baseline_accuracy).astype(np.float64)
-#print(baseline_accuracy)
+print(baseline_accuracy)
 
 with open("n0_correct_cluster.txt", "r") as f:
 	reader = csv.reader(f)
@@ -159,23 +160,6 @@ with open("n0_correct_baseline.txt", "r") as f:
 	reader = csv.reader(f)
 	n0_correct_baseline = [row for row in reader]
 
-
-'''
-#calculate mean baseline complexity
-baseline_complexity_mean = [[0 for i in range(22)] for j in range(10)]
-for feature in range(22):
-	for i in range(10):
-		for j in range(10):
-			baseline_complexity_mean[i][feature] += baseline_complexity[i*10+j][feature]
-	baseline_complexity[i][feature] /= 10
-
-#calculate mean baseline accuracy
-baseline_accuracy_mean = [0 for i in range(10)]
-for i in range(10):
-	for j in range(10):
-		baseline_accuracy_mean[i] += baseline_accuracy[i*10+j] 
-	baseline_accuracy_mean /= 10
-'''
 
 #calculate difference between baseline complexity and cluster wise complexity
 for feature in range(22):
@@ -197,13 +181,11 @@ for i in range(len(cluster_wise_accuracy)):
 
 n = len(line)
 m = len(line[0]) - 1
-#print(m)
-#print(n)
-
 
 feat_potential = []
-for i in range(m):
-	feat_potential.append(i)
+for feature in range(22):
+	feat_potential.append(feature)
+
 feat_old = []
 feat_new = []
 feat_old_coef = []
@@ -213,21 +195,18 @@ feat_old_pred = []
 y_true = []
 y_pred = []
 flag = 1
-score = []
 score_max = None
 old_sse = None
 coef_temp = []
 feat_all = []
-#the hill-climbing linear regression
 while flag:
 	y_pred_temp = []
 	y_true_temp = []
 	y_pred_temp = []
 	y_true_temp = []
+	score_temp = []
 	for feature in feat_potential:
 		feat_temp = []
-		for i in range(len(feat_old)):
-			feat_temp.append(feat_old[i])
 		feat_temp.append(feature)
 		data_m = [[] for i in range(n)]
 		data_class = []
@@ -248,27 +227,20 @@ while flag:
 		data_class = data_class.astype(np.float64)
 		reg.fit(data_m,data_class)
 		r_temp = pearsonr(data_class,reg.predict(data_m))
-		score.append(r_temp[0]**2)
+		score_temp.append(r_temp[0]**2)
 		coef_temp.append(reg.coef_)
 		y_pred_temp.append(reg.predict(data_m))
 		y_true_temp.append(data_class)
 		y_pred.append(y_pred_temp)
 		y_true.append(y_true_temp)
 		feat_all.append(feat_temp)
-	'''
-	if debug:
-		print("score")
-		print(score)
-		'''
-	for i in range(len(score)):
+
+	for i in range(len(score_temp)):
 		if score_max == None:
 			score_max = i
-		elif score[i] > score[score_max]:
+		elif score_temp[i] > score_temp[score_max]:
 			score_max = i
 	feat_new = feat_all[score_max]
-	if debug:
-		#print(coef_temp)
-		print("score_max", score_max, score[score_max])
 	feat_new_coef = coef_temp[score_max]
 
 	if old_sse == None:
@@ -309,58 +281,3 @@ while flag:
 		print("feat_new:  ",feat_new)
 	if len(feat_potential) == 0:
 		flag = 0
-
-
-#output the coefficient for the linear regression model and the result for feature selection
-with open("coefficient.txt","w") as f:
-	writer = csv.writer(f)
-	writer.writerow(feat_old_coef)
-	writer.writerow(feat_old)
-	temp = []
-	temp.append(score[score_max])
-	writer.writerow(temp)
-
-
-coefficient = feat_old_coef
-selected_features = feat_old
-
-
-cluster_select = []
-final_acc = []
-
-for n0 in range(100): 
-	no_corr = 0
-	no_total = 0
-	temp_select = []
-	for cluster in range(4):
-		x = []
-		temp = []
-		for feature in selected_features:
-			feature = int(feature)
-			temp.append(cluster_wise_complexity[n0*4+cluster][feature])
-		result = 0
-		for i in range(len(coefficient)):
-			result += float(coefficient[i])*temp[i]
-		#print(temp, result)
-		if result > 0:
-			no_corr += int(n0_correct_cluster[n0*4+cluster][0])
-			temp_select.append("c")
-		else:
-			no_corr += int(n0_correct_baseline[n0*4+cluster][0])
-			temp_select.append("b")
-		no_total += int(n0_correct_baseline[n0*4+cluster][1])
-
-	cluster_select.append(temp_select)
-	final_acc.append(no_corr/no_total)
-
-with open("final_result.txt", "w") as f:
-	writer = csv.writer(f)
-	temp = []
-	temp.append(sum(final_acc)/len(final_acc))
-	writer.writerow(temp)
-	writer.writerow(final_acc)
-	writer.writerows(cluster_select)
-
-
-
-
