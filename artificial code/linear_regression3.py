@@ -177,7 +177,7 @@ line = []
 for i in cluster_wise_complexity:
 	line.append(i)
 for i in range(len(cluster_wise_accuracy)):
-	line[i] += cluster_wise_accuracy[i][3]
+	line[i] = np.append(line[i], cluster_wise_accuracy[i][3])
 
 n = len(line)
 m = len(line[0]) - 1
