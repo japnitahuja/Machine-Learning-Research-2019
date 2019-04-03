@@ -31,9 +31,9 @@ def sse(true, pred):
     a = mse(true, pred, multioutput = 'raw_values')
     return sum(a)
 
-complexity_features = open("complexity_measures.txt").read().split("\n")
-normal_features = open("Classical-Decision_Tree.txt").read().split("\n")
-labels = open("dt_vs_lda.txt").read().split("\n")
+complexity_features = open("complexity_uci.txt").read().split("\n")
+normal_features = open("normal_metafeatures_uci.txt").read().split("\n")
+labels = open("dt_vs_knn.txt").read().split("\n")
 
 file = open("cluster_wise_data.txt","w")
 file.close()
@@ -273,6 +273,7 @@ for row_n in range(n0):
                 writer.writerow(temp)
         count += 1
 
+    '''
     #baseline
     best_metafeature_label = best_cluster_metafeature_baseline[row_n][0]
 
@@ -293,6 +294,7 @@ for row_n in range(n0):
             with open(new_file, "a") as f:
                 writer =csv.writer(f)
                 writer.writerow(temp)
+    '''
 
 
 #print("count inf", cnt_inf)
